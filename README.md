@@ -9,6 +9,7 @@ button on the Positions page but until then you can use this script.  If you tra
 and don't have an account and want to automate your option trades, check them out!
 
 Additional prerequisites before you can run this script:
+
 A) Before you can use this script you will need Python 3 installed.
 You can check if Python is installed by following this: https://blog.finxter.com/how-to-check-your-python-version/
 If you don't have it installed, install Python by visiting https://www.python.org/downloads/ and finding the Download button/link.
