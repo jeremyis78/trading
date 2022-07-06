@@ -81,3 +81,10 @@ your spreadsheet.
 ```python oa-positions-parser.py ~/Downloads/tc0dte.html|pbcopy``` (Mac)
 
 ```python oa-positions-parser.py %USERPROFILE%/Downloads/tc0dte.html|clip``` (Windows)
+
+If you're unfamiliar with running commands like this, try these useful articles:
+
+Open Terminal on Mac: https://support.apple.com/guide/terminal/open-or-quit-terminal-apd5265185d-f365-44cb-8b09-71a064a42125/mac
+
+Open Terminal on Windows: https://docs.microsoft.com/en-us/windows/terminal/
+Open CMD on Windows: https://www.lifewire.com/how-to-open-command-prompt-2618089 
