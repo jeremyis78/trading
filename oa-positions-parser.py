@@ -24,9 +24,9 @@ commpercontract = 0   # Decimal(config['commissions'])
 with open(config['file']) as fp:
     soup = BeautifulSoup(fp, 'html.parser')
     dom = etree.HTML(str(soup))
-#    bot = dom.xpath('//*[@id="bots-bot"]/hd/ct[2]/div/h1/a')[0].text
-#//*[@id=bots-bot]/hd/ct[2]/h1/a
-    bot = "unknown" #dom.xpath('//*[@id=bots-bot]/hd/ct[2]/h1/a')
+    #bot name is under the <a class="edit-title"> of the SECOND <h1 class="title">
+    botH1s = soup.find_all("h1", class_="title") #xpath from Chrome Dev Tools: '//*[@id=bots-bot]/hd/ct[2]/h1/a'
+    bot = botH1s[1].find("a", class_="edit-title").string
     closedpos = soup.find(id="bots-bot-positions-closedpos")
     bd = closedpos.find_all('bd', class_="dim-scroller")
     rows = bd[0].find_all("row", class_="pos")
