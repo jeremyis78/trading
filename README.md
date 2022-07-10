@@ -92,21 +92,38 @@ tradeno	bot	sym	exp	strat	postext	status	closedate	qty	cost	costdesc	pnl
 ```
 
 
-### Copy results to clipboard
+### Import trades to Excel or Sheets (using clip or pbcopy)
 You wisely saved 'tc0dte.html' (no spaces) in the default download directory and now want to 
-copy those trades into Excel or Sheets.  Run the appropriate command and then paste the results into
-your spreadsheet. **Note the clever use of clip or pbcopy in the commands below!**
+copy/import those trades into Excel or Sheets.  
 
-```python oa-positions-parser.py ~/Downloads/tc0dte.html|pbcopy``` (Mac)
+Step 0:
+Open a terminal (see Open a Terminal down below if you're unfamiliar)
+Step 1:
+Run the appropriate command below 
+**Note the command ends with |clip or |pbcopy. This is important. Be sure not to edit that out
+when you change the filename to your file**
 
 ```python oa-positions-parser.py %USERPROFILE%/Downloads/tc0dte.html|clip``` (Windows)
 
-If you're unfamiliar with running commands like this, try these useful articles:
+```python oa-positions-parser.py ~/Downloads/tc0dte.html|pbcopy``` (Mac)
 
-Open Terminal on Mac: https://support.apple.com/guide/terminal/open-or-quit-terminal-apd5265185d-f365-44cb-8b09-71a064a42125/mac
+Step 2:
+Open Excel or Sheets file you want to use
+
+Step 3:
+Windows: Ctrl + V    (Paste)
+Mac    : Command + V (Paste)
+
+Step 4:
+Voila!  All your trades from the bot are pasted into the active sheet.
+
+### Open a Terminal
+If you're unfamiliar with running commands like this, try these useful articles:
 
 Open Terminal on Windows: https://docs.microsoft.com/en-us/windows/terminal/
 Open CMD on Windows: https://www.lifewire.com/how-to-open-command-prompt-2618089
+
+Open Terminal on Mac: https://support.apple.com/guide/terminal/open-or-quit-terminal-apd5265185d-f365-44cb-8b09-71a064a42125/mac
 
 clip: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/clip
 pbcopy: https://osxdaily.com/2007/03/05/manipulating-the-clipboard-from-the-command-line/
