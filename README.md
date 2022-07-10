@@ -95,7 +95,7 @@ tradeno	bot	sym	exp	strat	postext	status	closedate	qty	cost	costdesc	pnl
 ### Copy results to clipboard
 You wisely saved 'tc0dte.html' (no spaces) in the default download directory and now want to 
 copy those trades into Excel or Sheets.  Run the appropriate command and then paste the results into
-your spreadsheet.
+your spreadsheet. **Note the clever use of clip or pbcopy in the commands below!**
 
 ```python oa-positions-parser.py ~/Downloads/tc0dte.html|pbcopy``` (Mac)
 
