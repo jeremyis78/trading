@@ -13,6 +13,11 @@ Additional prerequisites before you can run this script:
 A) Before you can use this script you will need Python 3 installed.
 You can check if Python is installed by following this: https://blog.finxter.com/how-to-check-your-python-version/
 If you don't have it installed, install Python by visiting https://www.python.org/downloads/ and finding the Download button/link.
+Additionally, after you've installed python, you'll need the beautifulsoup4 and lxml libraries.
+Open a Terminal or CMD and run
+```pip install beautifulsoup4```
+```pip install lxml```
+
 
 B) You'll need to save the file 'oa-positions-parser.py' on your computer somewhere and remember where you put it.
 I'd recommend putting in your home directory (~ on Mac or %USERPROFILE% on Windows) since this is where you'll be
