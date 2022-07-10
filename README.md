@@ -14,8 +14,12 @@ A) Before you can use this script you will need Python 3 installed.
 You can check if Python is installed by following this: https://blog.finxter.com/how-to-check-your-python-version/
 If you don't have it installed, install Python by visiting https://www.python.org/downloads/ and finding the Download button/link.
 Additionally, after you've installed python, you'll need the beautifulsoup4 and lxml libraries.
-Open a Terminal or CMD and run
+Open a Terminal or CMD and run:
+
 ```pip install beautifulsoup4```
+
+and
+
 ```pip install lxml```
 
 
