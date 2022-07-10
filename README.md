@@ -98,6 +98,7 @@ copy/import those trades into Excel or Sheets.
 
 Step 0:
 Open a terminal (see Open a Terminal down below if you're unfamiliar)
+
 Step 1:
 Run the appropriate command below 
 **Note the command ends with |clip or |pbcopy. This is important. Be sure not to edit that out
