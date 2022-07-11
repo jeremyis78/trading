@@ -14,14 +14,10 @@ Additional prerequisites before you can run this script:
 A) Before you can use this script you will need Python 3 installed.
 You can check if Python is installed by following this: https://blog.finxter.com/how-to-check-your-python-version/
 If you don't have it installed, install Python by visiting https://www.python.org/downloads/ and finding the Download button/link.
-Additionally, after you've installed python, you'll need the beautifulsoup4 and lxml libraries.
+Additionally, after you've installed python, you'll need the beautifulsoup library.
 Open a Terminal or CMD and run:
 
 ```pip install beautifulsoup4```
-
-and
-
-```pip install lxml```
 
 
 B) You'll need to save the file 'oa-positions-parser.py' on your computer somewhere and remember where you put it.
@@ -35,7 +31,8 @@ C) You'll need to produce the HTML file to pass to the script.
   4) Choose a filename with no spaces (maybe save as the my-bot-name.html) to make things easier later when you run the script.
 Note: there's a [bug in Chrome](https://support.google.com/chrome/thread/4239329/chrome-webpage-save-as-for-webpage-html-only-option-no-longer-works?hl=en)
 where you must save as "Webpage, Complete" in order to get the HTML file saved 
-properly (you can't use "Webpage, HTML Only" until they fix the bug). 
+properly (you can't use "Webpage, HTML Only" until they fix the bug). If you're using the Edge
+browser you don't need to do this, just save as "Webpage, HTML Only".
 Note: since this is a "screen scraper" script the only data available is what's visible
 on that positions page. For instance, there's no opening date of the trade (or times)
 on that page.
@@ -43,18 +40,31 @@ on that page.
 
 ### Usage
 python oa-positions-parser.py -h
-```usage: oa-positions-parser.py [-h] [--csv] file
+```
+usage: oa-positions-parser.py [-h] [--csv] file
+
+Parses the closed positions found on the positions page of an OptionAlpha bot. Works for Chrome and Edge browser
+
+positional arguments:
+  file        HTML file saved from OA bots positions page
+
+optional arguments:
+  -h, --help  show this help message and exit
+  --csv       Output CSV instead of the default TSV (tab-separated values)
+
+usage: oa-positions-parser.py [-h] [--csv] file
 
 Parses the closed positions found on the positions page of an OptionAlpha bot.
 
 positional arguments:
-file        HTML file saved from OA bots positions page
+  file        HTML file saved from OA bots positions page
 
 optional arguments:
--h, --help  show this help message and exit
---csv       Output CSV instead of the default TSV (tab-separated values)
+  -h, --help  show this help message and exit
+  --csv       Output CSV instead of the default TSV (tab-separated values)
 
 Examples (copies script output to clipboard):
+
 (Windows): python oa-positions-parser.py %USERPROFILE%/Downloads/my-bot-name.html|clip
 or
 (MAC): python oa-positions-parser.py ~/Downloads/my-bot-name.html|pbcopy
@@ -126,5 +136,7 @@ Open CMD on Windows: https://www.lifewire.com/how-to-open-command-prompt-2618089
 
 Open Terminal on Mac: https://support.apple.com/guide/terminal/open-or-quit-terminal-apd5265185d-f365-44cb-8b09-71a064a42125/mac
 
+
 clip: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/clip
+
 pbcopy: https://osxdaily.com/2007/03/05/manipulating-the-clipboard-from-the-command-line/
