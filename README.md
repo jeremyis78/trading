@@ -29,10 +29,9 @@ C) You'll need to produce the HTML file to pass to the script.
   2) Scroll down and click "Load More" until all positions are on screen
   3) Then save that page as an html file (File|Save Page as...). 
   4) Choose a filename with no spaces (maybe save as the my-bot-name.html) to make things easier later when you run the script.
-Note: there's a [bug in Chrome](https://support.google.com/chrome/thread/4239329/chrome-webpage-save-as-for-webpage-html-only-option-no-longer-works?hl=en)
+Note: there's a [bug in Chromium-based browsers (including Chrome and Edge)](https://support.google.com/chrome/thread/4239329/chrome-webpage-save-as-for-webpage-html-only-option-no-longer-works?hl=en)
 where you must save as "Webpage, Complete" in order to get the HTML file saved 
-properly (you can't use "Webpage, HTML Only" until they fix the bug). If you're using the Edge
-browser you don't need to do this, just save as "Webpage, HTML Only".
+properly (you can't use "Webpage, HTML Only" until they fix the bug). 
 Note: since this is a "screen scraper" script the only data available is what's visible
 on that positions page. For instance, there's no opening date of the trade (or times)
 on that page.
