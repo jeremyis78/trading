@@ -3,7 +3,8 @@ import argparse
 import csv
 import sys
  
-msg = "Parses the closed positions found on the positions page of an OptionAlpha bot. Works for Chrome and Edge browser"
+msg = """Parses the closed positions found on the positions page of an OptionAlpha bot.
+Works and tested in Chrome, Brave and Edge browsers"""
 epilog_msg = """usage: oa-positions-parser.py [-h] [--csv] file
 
 Parses the closed positions found on the positions page of an OptionAlpha bot.
@@ -15,18 +16,18 @@ optional arguments:
   -h, --help  show this help message and exit
   --csv       Output CSV instead of the default TSV (tab-separated values)
 
-Examples (copies script output to clipboard):
+Examples:
 
-(Windows): python oa-positions-parser.py %USERPROFILE%/Downloads/my-bot-name.html|clip
+(Windows): python oa-positions-parser.py %USERPROFILE%/Downloads/my-bot-name.html
 or
-(MAC): python oa-positions-parser.py ~/Downloads/my-bot-name.html|pbcopy
+(Mac)    : python oa-positions-parser.py ~/Downloads/my-bot-name.html
 
-Then open Excel/Sheets and paste.  Done.
+The above commands print the output to the console in the default TSV output.
+You can also output to a TSV or CSV file.
+In this example, we're on Windows and create both a TSV and CSV file instead of printing to the console.
 
-You can also export as CSV but it doesn't play as nice with Excel or Sheets using clip or pbcopy so it's best
-to use file redirection to create a new file and then open/import that to your spreadsheet:
-python oa-positions-parser.py ~/Downloads/my-bot-name.html > my-bot-name.tsv
-python oa-positions-parser.py --csv ~/Downloads/my-bot-name.html > my-bot-name.csv
+python oa-positions-parser.py %USERPROFILE%/Downloads/my-bot-name.html > my-bot-name.tsv
+python oa-positions-parser.py --csv %USERPROFILE%/Downloads/my-bot-name.html > my-bot-name.csv
 """
 parser = argparse.ArgumentParser(description=msg, epilog=epilog_msg,
                                  formatter_class=argparse.RawTextHelpFormatter)
@@ -48,6 +49,17 @@ def clean_number(text):
 
 with open(args.file) as fp:
     soup = BeautifulSoup(fp, 'html.parser')
+    # One thing: I wrote this script so it will "blow up" and give a good error message if it ever fails.
+    # For example, "bot = title[0].string" if title is None or a zero-length array then it will choke
+    # on this exact line telling us exactly why.
+    # Another example: "costdiv.div.span.string".  Accessing this string after doing a 'find' for costdiv
+    # implies there's a costdiv then a div then a span and that span has some text node.  If any of those are None
+    # then again it will choke on that line with an error message telling us mostly what's wrong.
+    # One more: "title = soup.select("#bots-bot hd.title-editor h1.title a.edit-title")"
+    # Starting in reverse, we're looking an <a> tag with class="edit-title" within a
+    # an <h1> with class "title" within an <hd> with class "title-editor" within
+    # an element (doesn't matter what type element) with an id of "bots-bot". If we wanted to specify
+    # we could do "view#bots-bot" if the element was a <view>.
     title = soup.select("#bots-bot hd.title-editor h1.title a.edit-title")
     bot = title[0].string
     closedpos = soup.find(id="bots-bot-positions-closedpos")
