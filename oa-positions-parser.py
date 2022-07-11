@@ -1,4 +1,3 @@
-
 from bs4 import BeautifulSoup
 import argparse
 import csv
@@ -24,8 +23,10 @@ or
 
 Then open Excel/Sheets and paste.  Done.
 
-You can also export as CSV but it doesn't play as nice with Excel or Sheets by default:
-python oa-positions-parser.py --csv ~/Downloads/my-bot-name.html
+You can also export as CSV but it doesn't play as nice with Excel or Sheets using clip or pbcopy so it's best
+to use file redirection to create a new file and then open/import that to your spreadsheet:
+python oa-positions-parser.py ~/Downloads/my-bot-name.html > my-bot-name.tsv
+python oa-positions-parser.py --csv ~/Downloads/my-bot-name.html > my-bot-name.csv
 """
 parser = argparse.ArgumentParser(description=msg, epilog=epilog_msg,
                                  formatter_class=argparse.RawTextHelpFormatter)

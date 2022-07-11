@@ -71,8 +71,9 @@ or
 
 Then open Excel/Sheets and paste.  Done.
 
-You can also export as CSV but it doesn't play as nice with Excel or Sheets by default:
-python oa-positions-parser.py --csv ~/Downloads/my-bot-name.html
+You can also export as CSV but it doesn't play as nice with Excel or Sheets using clip or pbcopy so it's best
+to use file redirection to create a new file and then import that to your spreadsheet:
+python oa-positions-parser.py --csv ~/Downloads/my-bot-name.html > my-bot-name.csv
 ```
 
 ### Sample usage showing TSV output
@@ -102,7 +103,7 @@ tradeno	bot	sym	exp	strat	postext	status	closedate	qty	cost	costdesc	pnl
 ```
 
 
-### Import trades to Excel or Sheets (using clip or pbcopy)
+### Export to clipboard (using clipboard)
 You wisely saved 'tc0dte.html' (no spaces) in the default download directory and now want to 
 copy/import those trades into Excel or Sheets.  
 
@@ -127,6 +128,15 @@ Mac    : Command + V (Paste)
 
 Step 4:
 Voila!  All your trades from the bot are pasted into the active sheet.
+
+NOTE: The default separator that Excel/Sheets uses when you paste into a sheet
+is the tab character. That's the reason the script's default is TSV output.  If you use
+--csv then you'll want to export the data to a file first. The reason for this is because
+commas appear in some fields on the positions page and even though the script puts those
+fields with commas in them in quotes as the csv standard states (https://datatracker.ietf.org/doc/html/rfc4180),
+Excel or Sheets doesn't appear to respect quoted fields when you paste
+data to a sheet. See command help for details on outputting to a file.
+
 
 ### Open a Terminal
 If you're unfamiliar with running commands like this, try these useful articles:
