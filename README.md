@@ -99,30 +99,31 @@ python oa-positions-parser.py --csv --fees 45.09 %USERPROFILE%/Downloads/my-bot-
 ### Sample usage: showing TSV output
 ```
 $ python oa-positions-parser.py files/tc0dte.html
-tradeno	bot	sym	exp	strat	postext	status	closedate	qty	cost	costdesc	pnl	fees	netpnl
-1	TC 0DTE	SPY	7/5	Short Call Spread	-381, +386	Closed	Jul 5	13	195	Credit	-312	0	-312
-2	TC 0DTE	SPY	7/5	Short Put Spread	-368, +363	Closed	Jul 5	13	312	Credit	299	0	299
-3	TC 0DTE	SPY	7/1	Short Put Spread	-372, +367	Closed	Jul 1	13	377	Credit	364	0	364
-4	TC 0DTE	SPY	7/1	Short Call Spread	-384, +389	Closed	Jul 1	12	168	Credit	144	0	144
-5	TC 0DTE	SPY	6/30	Short Call Spread	-382, +387	Closed	Jun 30	12	300	Credit	180	0	180
-6	TC 0DTE	SPY	6/30	Short Put Spread	-367, +362	Closed	Jun 30	12	156	Credit	144	0	144
-7	TC 0DTE	SPY	6/29	Short Call Spread	-386, +391	Closed	Jun 29	12	180	Credit	180	0	180
-8	TC 0DTE	SPY	6/29	Short Put Spread	-373, +368	Closed	Jun 29	12	324	Credit	288	0	288
-9	TC 0DTE	SPY	6/27	Short Call Spread	-395, +400	Closed	Jun 27	11	198	Credit	187	0	187
-10	TC 0DTE	SPY	6/27	Short Put Spread	-382, +377	Closed	Jun 27	11	209	Credit	187	0	187
-11	TC 0DTE	SPY	6/24	Short Put Spread	-377, +372	Closed	Jun 24	12	216	Credit	192	0	192
-12	TC 0DTE	SPY	6/24	Short Call Spread	-388, +393	Closed	Jun 24	12	252	Credit	-636	0	-636
-13	TC 0DTE	SPY	6/22	Short Put Spread	-365, +360	Closed	Jun 22	12	180	Credit	168	0	168
-14	TC 0DTE	SPY	6/22	Short Call Spread	-378, +383	Closed	Jun 22	12	264	Credit	-864	0	-864
-15	TC 0DTE	SPY	6/21	Short Call Spread	-380, +385	Closed	Jun 21	12	132	Credit	120	0	120
-16	TC 0DTE	SPY	6/21	Short Put Spread	-367, +362	Closed	Jun 21	12	204	Credit	192	0	192
-17	TC 0DTE	SPY	6/17	Short Put Spread	-360, +355	Closed	Jun 17	12	252	Credit	216	0	216
-18	TC 0DTE	SPY	6/17	Short Call Spread	-376, +381	Closed	Jun 17	12	252	Credit	228	0	228
-19	TC 0DTE	SPY	6/15	Short Put Spread	-366, +361	Closed	Jun 15	12	324	Credit	-36	0	-36
-20	TC 0DTE	SPY	6/15	Short Call Spread	-389, +394	Closed	Jun 15	12	408	Credit	168	0	168
+tradeno	bot	sym	exp	strat	postext	status	closedate	qty	cost	costdesc	pnl
+1	TC 0DTE	SPY	7/5	Short Call Spread	-381, +386	Closed	Jul 5	13	195	Credit	-312
+2	TC 0DTE	SPY	7/5	Short Put Spread	-368, +363	Closed	Jul 5	13	312	Credit	299
+3	TC 0DTE	SPY	7/1	Short Put Spread	-372, +367	Closed	Jul 1	13	377	Credit	364
+4	TC 0DTE	SPY	7/1	Short Call Spread	-384, +389	Closed	Jul 1	12	168	Credit	144
+5	TC 0DTE	SPY	6/30	Short Call Spread	-382, +387	Closed	Jun 30	12	300	Credit	180
+6	TC 0DTE	SPY	6/30	Short Put Spread	-367, +362	Closed	Jun 30	12	156	Credit	144
+7	TC 0DTE	SPY	6/29	Short Call Spread	-386, +391	Closed	Jun 29	12	180	Credit	180
+8	TC 0DTE	SPY	6/29	Short Put Spread	-373, +368	Closed	Jun 29	12	324	Credit	288
+9	TC 0DTE	SPY	6/27	Short Call Spread	-395, +400	Closed	Jun 27	11	198	Credit	187
+10	TC 0DTE	SPY	6/27	Short Put Spread	-382, +377	Closed	Jun 27	11	209	Credit	187
+11	TC 0DTE	SPY	6/24	Short Put Spread	-377, +372	Closed	Jun 24	12	216	Credit	192
+12	TC 0DTE	SPY	6/24	Short Call Spread	-388, +393	Closed	Jun 24	12	252	Credit	-636
+13	TC 0DTE	SPY	6/22	Short Put Spread	-365, +360	Closed	Jun 22	12	180	Credit	168
+14	TC 0DTE	SPY	6/22	Short Call Spread	-378, +383	Closed	Jun 22	12	264	Credit	-864
+15	TC 0DTE	SPY	6/21	Short Call Spread	-380, +385	Closed	Jun 21	12	132	Credit	120
+16	TC 0DTE	SPY	6/21	Short Put Spread	-367, +362	Closed	Jun 21	12	204	Credit	192
+17	TC 0DTE	SPY	6/17	Short Put Spread	-360, +355	Closed	Jun 17	12	252	Credit	216
+18	TC 0DTE	SPY	6/17	Short Call Spread	-376, +381	Closed	Jun 17	12	252	Credit	228
+19	TC 0DTE	SPY	6/15	Short Put Spread	-366, +361	Closed	Jun 15	12	324	Credit	-36
+20	TC 0DTE	SPY	6/15	Short Call Spread	-389, +394	Closed	Jun 15	12	408	Credit	168
 ```
 
 ### Sample usage: exporting to file (including estimated fees of $0.461/contract)
+NOTE: there are two additional columns at the end: fees and netpnl (netpnl is the sum of pnl and fees)
 ```
 $ python oa-positions-parser.py --fees 46.1 ~/Downloads/tc0dte-margin.html
 $ head -16 tc0dte-margin.tsv

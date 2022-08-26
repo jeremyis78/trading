@@ -88,8 +88,12 @@ with open(args.file) as fp:
     bd = closedpos.find_all('bd', class_="dim-scroller")
     rows = bd[0].find_all("row", class_="pos")
     writer = csv.writer(sys.stdout, delimiter=delim, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["tradeno", "bot", "sym", "exp", "strat", "postext", "status", "closedate", "qty",
+    if per_contract_fee != 0:
+        writer.writerow(["tradeno", "bot", "sym", "exp", "strat", "postext", "status", "closedate", "qty",
                     "cost", "costdesc", "pnl", "fees", "netpnl"])
+    else:
+        writer.writerow(["tradeno", "bot", "sym", "exp", "strat", "postext", "status", "closedate", "qty",
+                    "cost", "costdesc", "pnl"])
     tradeno = 1;
     for row in rows:
         symdiv = row.bd.find("div", class_="symbol")
@@ -128,5 +132,8 @@ with open(args.file) as fp:
             fees = 0
             netpnl = pnl
 
-        writer.writerow([tradeno, bot, sym, exp, strat, postext, status, closedate, qty, cost, costdesc, pnl, fees, netpnl])
+        if per_contract_fee != 0:
+            writer.writerow([tradeno, bot, sym, exp, strat, postext, status, closedate, qty, cost, costdesc, pnl, fees, netpnl])
+        else:
+            writer.writerow([tradeno, bot, sym, exp, strat, postext, status, closedate, qty, cost, costdesc, pnl])
         tradeno += 1
