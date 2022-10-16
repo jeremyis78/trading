@@ -3,6 +3,10 @@
 A simple repository of helpful trading tools.
 
 ## oa-positions-parser.py
+
+UPDATE: The Oct 15, 2022 release is so awesome--1 minute intervals and so many other enhancements and improvements!  
+        But sadly, it broke this script. I'm working on a fix but give me a few days or a week or so; I've got other commitments. 
+
 This script is for those users with an [OptionAlpha](https://optionalpha.com) subscription who would like to 
 download the trades their bot or bots have made into Excel or Sheets. Several of us are eagerly awaiting a Download
 button on the Positions page but until then you can use this script.  If you trade options systematically
