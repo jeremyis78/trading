@@ -4,8 +4,14 @@ A simple repository of helpful trading tools.
 
 ## oa-positions-parser.py
 
-UPDATE: The Oct 15, 2022 release is so awesome--1 minute intervals and so many other enhancements and improvements!  
+
+__UPDATE: The Oct 15, 2022 release is so awesome--1 minute intervals and so many other enhancements and improvements!  
         But sadly, it broke this script. I'm working on a fix but give me a few days or a week or so; I've got other commitments. 
+        A few hours later: so while there is new data available on the closed positions page (the exact time of position 
+        closing (e.g. Oct 13, 2022 at 1:00pm) there are crucial pieces of info now missing, especially if 
+        you plan to use the data for external analysis in a spreadsheet: 1) the quantity, 2) the opening credit (or debit). Unless 
+        OA adds them back this script may not be worth keeping up. As such, I'm stopping development on this for now.
+        If things change let me know and I may resurrect it.__
 
 This script is for those users with an [OptionAlpha](https://optionalpha.com) subscription who would like to 
 download the trades their bot or bots have made into Excel or Sheets. Several of us are eagerly awaiting a Download
