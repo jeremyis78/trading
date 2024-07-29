@@ -1,7 +1,29 @@
 #!/bin/bash
 # Compute US Federal Holidays
+# Requires ncal and MacOS/BSD-specific date commands.
+#
+# Usage: holidays.sh YYYY
+# Example: ./holidays.sh 2022
+#
+# The default output is "+%a, %b %d" for relative dates (e.g., last Monday in May).
+# The last Monday in May would produce a line like "Mon, May 30" leaving out the year.
+# If the holiday is an absolute date (e.g. Jan 1st, Jul 4th) and it falls on a weekend
+# then " %Y $adj_days" would be appended, adding the year as well as the number of days
+# adjusted (+/-adj_days).
+#
+# It properly handles the case where an observed holiday can occur in the previous
+# month or even the previous month of the previous year.
+# For example, New Year's Day in 2022 fell on Saturday so the holiday was observed
+# on Friday, Dec 31, 2021; this script would indicate "Fri, Dec 31 2021 -1"
+# including the year as well as the relative offset to indicate this is an observed
+# holiday, not the actual date of the holiday.
+#
+# Bugs: Presently, all holidays as of 2021 are listed; calling this with the year
+# 2020 would still list Juneteenth which was not officially recognized until 2021.
+# TODO: make the output format configurable/machine-readable/ISO format with a
+# TODO: second argument
 
-YEAR=$1  # YYYY format (e.g. 2024)
+YEAR=$1  # YYYY format (e.g. 2022)
 OUTPUT_FMT="+%a, %d %b %Y %z"
 
 display_date(){   # params: ISO_DATE (YYYY-MM-DD)
@@ -15,90 +37,60 @@ display_date(){   # params: ISO_DATE (YYYY-MM-DD)
   echo $dt $MSG
 }
 
-# Compute the observed holiday from a fixed date.
-observed_date(){ # params yyyy, mm, dd
-  YYYY=$1
-  MM=$2
-  DD=$3
-  HOLIDAY=${YEAR}-${MM}-${DD}
-  DOW=$(date -j -v${MM}m -v${DD}d -v${YYYY}y '+%a')  # Sat, Sun, Mon, etc
+# Compute the observed holiday from an absolute or fixed date.
+observe_date(){ # params yyyy, mm, dd
+  month=$1
+  MM=
+  day=$2
+  YYYY=$3
+  ORIGINAL="${month} ${day}"
+  dow=$(date -j -v"${month}"m -v"${day}"d -v"${YYYY}"y '+%a')  # Sat, Sun, Mon, etc
 
-  # echo -n "$HOLIDAY is on $DOW; observed on "
-
-  case $DOW in
-
-    Sun)
-      # Add one day to $holiday
-      OBSERVED_DD=$((DD+1))
-      printf "%d-%02d-%02d (observed)" ${YEAR} ${MM} ${OBSERVED_DD}
-      ;;
-
-    Sat)
-      # Subtract one day to $holiday
-      OBSERVED_DD=$((DD-1)) 
-      printf "%d-%02d-%02d (observed)" ${YEAR} ${MM} ${OBSERVED_DD}   
-      ;;
-
-    *)
-      echo -n "$HOLIDAY"
-      ;;
+  adj_days=0
+  msg=""
+  case $dow in
+  Sun) adj_days=+1; ;; # move to Monday
+  Sat) adj_days=-1; ;; # move to Friday
   esac
+
+  if [ "$adj_days" -ne "0" ] ;
+  then # adjust the date by adj_days
+    date -v"${day}"d -v"${month}"m -v"${YYYY}"y -v${adj_days}d "+%a, %b %d %Y ${adj_days}";
+  else
+    echo "$dow, $month $day"
+  fi
 }
 
-# New Year's Day is always Jan 1st, observed holiday may be day before or after
-#actual="$YEAR-01-01"
-#observed=$(observed_date $YEAR 01 01)
-echo "Jan1: $(observed_date $YEAR 01 01)"
+# Compute the relative date given: month, ordinal, day of week
+#    Example args: Nov 3rd Mon -> 3rd Monday in November
+#                  May Lst Thu -> Last Thursday in May
+compute_date(){
+  month=$1
+  ordinal=$2
+  dow=$3
+  year=$4
 
+  ordinal_no=${ordinal:0:1}
+  field=$((ordinal_no+1))
+  dow_days=$(ncal "$month" "$year"| grep "^${dow:0:2}"|tr -s " ")
 
-# MLK Jr Day: 3rd Monday in January
-MM=1
-echo 3MJan: Jan $(ncal $MM $YEAR| grep "^Mo"|tr -s " "|cut -d' ' -f 4) 
-#                     \            \     \___________________\/    
-#                   Jaunary      All Mondays               3rd Monday only
+  if [ "$ordinal" = "Lst" ]
+  then
+    day=$(echo "$dow_days"|awk -F' ' '{print $NF}')
+  else
+    day=$(echo "$dow_days"|cut -d' ' -f "$field")
+  fi
+  echo "$dow, $month $day"
+}
 
-# Washington's Birthday/President's Day: 3rd Monday in February
-MM=2
-echo 3MFeb: Jan $(ncal $MM $YEAR| grep "^Mo"|tr -s " "|cut -d' ' -f 4)
-#                     \            \      \___________________\/
-#                   February      All Mondays               3rd Monday only
-
-# Memorial Day: Last Monday in May
-MM=5
-echo LMMay: May $(ncal $MM $YEAR| grep "^Mo"|tr -s " "|awk -F' ' '{print $NF}')
-#                     \            \    \___________________\/
-#                     May      All Mondays               Last one (aka last field) 
-
-# Juneteenth is always June 19th, observed holiday may be day before or after
-MM=6
-#observed=$(observed_date $YEAR $MM 19)
-echo "Jun19: $(observed_date $YEAR $MM 19)" 
-
-# Independence Day is always July 4th, observed holiday may be day before or after
-MM=7
-#observed=$(observed_date $YEAR $MM 4)
-echo "Jul4: $(observed_date $YEAR $MM 4)"
- 
-# Labor Day: First Monday in Sep
-MM=9
-echo 1MSep: Sep $(ncal $MM $YEAR| grep "^Mo"|tr -s " "|cut -d' ' -f 2)
-#                     \            \       \___________________\/
-#                   September  All Mondays                   1st one
-
-# Columbus / Indigenous Peoples Day: Second Monday in October
-MM=10
-echo 2MOct: Oct $(ncal $MM $YEAR| grep "^Mo"|tr -s " "|cut -d' ' -f 3)
-#                     \            \         \___________________\/
-#                   October      All Mondays                  2nd one
-
-# Veterans' Day is always Nov 11th, observed holiday may be day before or after
-MM=11
-echo "Nov11: $(observed_date $YEAR $MM 11)"
-
-# Thanksgiving Day: Fourth Thursday in November
-echo 4TNov: Nov $(ncal $MM $YEAR| grep "^Th"|tr -s " "|cut -d' ' -f 5)
-#                     \            \        \___________________\/
-#                   November    All Thursdays               4th one
-
-# Christmas Day is always Dec 25th, observed holiday may be day before or after
-echo "Dec25: $(observed_date $YEAR 12 25)"
+observe_date "Jan" 1 "$YEAR"           # Abs: New Year's Day
+compute_date "Jan" "3rd" "Mon" "$YEAR" # Rel: MLK Jr Day: 3rd Monday in January
+compute_date "Feb" "3rd" "Mon" "$YEAR" # Rel: Washington's Birthday/President's Day: 3rd Monday in February
+compute_date "May" "Lst" "Mon" "$YEAR" # Rel: Memorial Day: Last Monday in May
+observe_date "Jun" 19 "$YEAR"          # Abs: Juneteenth
+observe_date "Jul" 4 "$YEAR"           # Abs: Independence Day
+compute_date "Sep" "1st" "Mon" "$YEAR" # Rel: Labor Day
+compute_date "Oct" "2nd" "Mon" "$YEAR" # Rel: Columbus / Indigenous Peoples Day: Second Monday in October
+observe_date "Nov" 11 "$YEAR"          # Abs: Veterans' Day
+compute_date "Nov" "4th" "Thu" "$YEAR" # Rel: Thanksgiving Day
+observe_date "Dec" 25 "$YEAR"          # Abs: Christmas
