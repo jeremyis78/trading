@@ -28,7 +28,7 @@
 
 YEAR=${1}  # YYYY format (e.g. 2022)
 OUTPUT_FMT=${2} #e.g., "+%a, %d %b %Y %z"
-DEFAULT_FMT="+%a, %d %b %Y"
+DEFAULT_FMT="+%a, %b %d"
 
 display_date(){   # params: ISO_DATE (YYYY-MM-DD)
   d=$1
@@ -92,7 +92,7 @@ compute_date(){
 
   if [ "$OUTPUT_FMT" = "" ] ;
     then echo "$dow, $month $day";
-    else date -v"${day}"d -v"${month}"m -v"${year}"y "$OUTPUT_FMT";
+    else date -j -f '%d-%b-%Y' "${day}-${month}-${year}" "$OUTPUT_FMT";
   fi
   #date -v"${day}"d -v"${month}"m -v"${year}"y "$OUTPUT_FMT"
 }
